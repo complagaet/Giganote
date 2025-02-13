@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "test": "nodemon server.js"
+    "test": "nodemon server.js",
+    "start": "node server.js"
   },
   "author": "complagaet",
   "license": "ISC",
