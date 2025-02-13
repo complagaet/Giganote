@@ -8,7 +8,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 
-mongoose.connect(`${DB_URL}`).then(r => console.log(`Connected to MongoDB`));
+mongoose.connect(`${DB_URL}`).then(() => console.log(`Connected to MongoDB`));
 
 app.use(express.static('static'));
 app.use(express.json());
@@ -35,10 +35,8 @@ app.get("/secured", checkToken, isAdmin, async (req, res) => {
 // Мега проверочка на наличие .env файлика чтобы классно быстренько собрать оттуда секретики
 fs.access(".env", (error) => {
     error ? console.log("[.env] Not found!") : console.log("[.env] Found!");
-
-    if (!error) {
-        app.listen(PORT, () => {
-            console.log(`Server is running at http://localhost:${PORT}`);
-        })
-    }
 });
+
+app.listen(PORT, () => {
+    console.log(`Server is running at http://localhost:${PORT}`);
+})
