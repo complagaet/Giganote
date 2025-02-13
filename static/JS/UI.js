@@ -243,7 +243,11 @@ const buildMainPage = () => {
 
     document.getElementById("logout").onclick = () => {
         giganote.storage.reset()
-        menuEntrySwitch(giganote.pages.mainPage, giganote.pages.authPage)
+        menuEntrySwitch(giganote.pages.mainPage, giganote.pages.loading)
+
+        setTimeout(() => {
+            initialize();
+        }, 600);
     }
 
     const newTaskButton = document.getElementById("newTask")

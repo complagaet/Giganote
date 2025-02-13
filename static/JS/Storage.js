@@ -42,6 +42,7 @@ class Storage {
 
     reset() {
         document.cookie = `${this.cookieName}=${encodeURIComponent(JSON.stringify(this.data))}; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`
+        this.data = {}
         console.log(`${this.cookieName}: cookie deleted`)
     }
 }
