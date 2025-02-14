@@ -21,6 +21,17 @@ const menuEntrySwitch = (from, to) => {
     }, 315)
 }
 
+const uiLocker = (status = true) => {
+    document.querySelectorAll("button").forEach(e => {
+        status ? e.style.pointerEvents = "none" : e.style.pointerEvents = ""
+    })
+}
+
+const navBarLoader = (show = true) => {
+    const loader = document.getElementById("navBarLoader").classList
+    show ? loader.remove("loaderHidden") : loader.add("loaderHidden")
+}
+
 const shakeElement = (elem) => {
     elem.classList.add("mistake", "shake");
     setTimeout(() => { elem.classList.remove("shake"); }, 300);
@@ -220,7 +231,8 @@ const buildMainPage = () => {
                 <h3>${giganote.user.username}</h3>
                 <button class="bobatron" id="newTask" Bt-CM="0.5">New task</button>
             </div>
-            <div class="horizontal-container" style="justify-content: flex-end"> 
+            <div class="horizontal-container flex-aligncenter" style="justify-content: flex-end"> 
+                <div id="navBarLoader" class="loader loaderHidden"></div>
                 <button class="bobatron" id="logout" Bt-CM="0.5">Logout!</button>
             </div>
         </div>
@@ -306,11 +318,8 @@ const buildMainPage = () => {
                 }
 
                 if (pass) {
-                    await giganote.addTask({
-                        title: taskTitle.value,
-                        content: taskContent.value
-                    })
-                    await giganote.getTasks()
+                    uiLocker()
+                    navBarLoader()
 
                     document.getElementById("newTaskDummyTitle").innerHTML = taskTitle.value;
                     document.getElementById("newTaskDummyContent").innerHTML = taskContent.value;
@@ -321,8 +330,17 @@ const buildMainPage = () => {
 
                     newTaskWindow.collapse()
 
-                    setTimeout(async () => {
+                    await giganote.addTask({
+                        title: taskTitle.value,
+                        content: taskContent.value
+                    })
+                    await giganote.getTasks()
+
+                    navBarLoader(false)
+
+                    setTimeout(() => {
                         buildMainPage()
+                        uiLocker(false)
                     }, 1000)
                 }
             }
@@ -336,8 +354,8 @@ const buildMainPage = () => {
     const deleteTaskButtons = document.getElementsByClassName("deleteTaskButton");
     for (let i of deleteTaskButtons) {
         i.onclick = async () => {
-            await giganote.deleteTask(i.getAttribute("taskId"))
-            await giganote.getTasks()
+            uiLocker()
+            navBarLoader()
 
             const entry = document.getElementById(i.getAttribute("taskId"));
             entry.setAttribute("style", "z-index: -4; transition-duration: 0.3s; opacity: 0; scale: 0.7; filter: blur(10px);");
@@ -346,8 +364,14 @@ const buildMainPage = () => {
                 entry.style.marginTop = `-${entry.offsetHeight + 10}px`
             }, 300)
 
+            await giganote.deleteTask(i.getAttribute("taskId"))
+            await giganote.getTasks()
+
+            navBarLoader(false)
+
             setTimeout(() => {
                 buildMainPage()
+                uiLocker(false)
             }, 600)
         }
     }
@@ -355,8 +379,8 @@ const buildMainPage = () => {
     const completionTaskButtons = document.getElementsByClassName("completionTaskButton");
     for (let i of completionTaskButtons) {
         i.onclick = async () => {
-            await giganote.patchTask(i.getAttribute("taskId"), { completed: i.getAttribute("completed") === "false" })
-            await giganote.getTasks()
+            uiLocker()
+            navBarLoader()
 
             const entry = document.getElementById(`task-${i.getAttribute("taskId")}`);
             entry.transitionDuration = "0.2s"
@@ -371,8 +395,14 @@ const buildMainPage = () => {
                 i.style.opacity = "1"
             }, 200)
 
+            await giganote.patchTask(i.getAttribute("taskId"), { completed: i.getAttribute("completed") === "false" })
+            await giganote.getTasks()
+
+            navBarLoader(false)
+
             setTimeout(() => {
                 buildMainPage()
+                uiLocker(false)
             }, 600)
         }
     }

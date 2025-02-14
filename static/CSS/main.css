@@ -141,3 +141,24 @@ button:hover, .post:hover {
 .binButton {
     background-image: url("../SVG/bin.svg");
 }
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #89bff4;
+    box-shadow: 0 0 0 0 rgba(142, 216, 255, 0.27);
+    animation: l1 1s infinite;
+    transition-duration: 0.2s;
+}
+@keyframes l1 {
+    100% {box-shadow: 0 0 0 30px #0000}
+}
+
+.loaderHidden {
+    scale: 0;
+    opacity: 0;
+}
