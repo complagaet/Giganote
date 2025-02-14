@@ -27,8 +27,8 @@ const uiLocker = (status = true) => {
     })
 }
 
-const navBarLoader = (show = true) => {
-    const loader = document.getElementById("navBarLoader").classList
+const navBarLoader = (show = true, elemId = "navBarLoader") => {
+    const loader = document.getElementById(elemId).classList
     show ? loader.remove("loaderHidden") : loader.add("loaderHidden")
 }
 
@@ -62,9 +62,12 @@ const buildAuthPage = () => {
             <div class="vertical-container" style="height: 100%">
                 <div class="flex-justifyspacebetween flex-aligncenter" style="gap: 10px; width: 100%">
                     <h3>Register</h3>
-                    <svg class="iconButton noButton deleteTaskButton" id="closeRegisterWindow" style="transition-duration: 0.3s; cursor: pointer"></svg> 
+                    <div class="flex-justifyspacebetween flex-aligncenter" style="width: fit-content">
+                        <div class="loader loaderHidden" id="authLoader" style="margin-right: 10px"></div>
+                        <svg class="iconButton noButton deleteTaskButton" id="closeRegisterWindow" style="transition-duration: 0.3s; cursor: pointer"></svg>
+                    </div>
                 </div>
-                <div class="vertical-container flex-justifycenter" style="gap: 10px; height: 100%">
+                <div class="vertical-container flex-justifycenter" id="authForm" style="gap: 10px; height: 100%">
                     <label for="registerUsername" style="font-weight: bold">Username</label>
                     <input style="border-radius: 10px" type="text" id="registerUsername" class="bobatron" Bt-CM="0.5" placeholder="Username..." required>
                     
@@ -108,12 +111,17 @@ const buildAuthPage = () => {
                     return;
                 }
 
+                navBarLoader(true, "authLoader")
+                uiLocker()
                 const result = await giganote.register(usernameValue, emailValue, passwordValue);
 
                 if (result.error) {
                     errorContainer.innerHTML = result.error;
+                    navBarLoader(false, "authLoader");
+                    uiLocker(false);
                 } else {
                     registerWindow.collapse();
+                    uiLocker(false);
 
                     setTimeout(() => {
                         menuEntrySwitch(giganote.pages.authPage, giganote.pages.loading);
@@ -146,7 +154,10 @@ const buildAuthPage = () => {
             <div class="vertical-container" style="height: 100%">
                 <div class="flex-justifyspacebetween flex-aligncenter" style="gap: 10px; width: 100%">
                     <h3>Login</h3>
-                    <svg class="iconButton noButton deleteTaskButton" id="closeLoginWindow" style="transition-duration: 0.3s; cursor: pointer"></svg> 
+                    <div class="flex-justifyspacebetween flex-aligncenter" style="width: fit-content">
+                        <div class="loader loaderHidden" id="authLoader" style="margin-right: 10px"></div>
+                        <svg class="iconButton noButton deleteTaskButton" id="closeLoginWindow" style="transition-duration: 0.3s; cursor: pointer"></svg>
+                    </div>
                 </div>
                 <div class="vertical-container flex-justifycenter" style="gap: 10px; height: 100%">
                     <label for="email" style="font-weight: bold">Email</label>
@@ -187,12 +198,17 @@ const buildAuthPage = () => {
                     return;
                 }
 
+                navBarLoader(true, "authLoader")
+                uiLocker()
                 const result = await giganote.login(emailValue, passwordValue);
 
                 if (result.error) {
                     errorContainer.innerHTML = result.error;
+                    navBarLoader(false, "authLoader");
+                    uiLocker(false);
                 } else {
                     loginWindow.collapse();
+                    uiLocker(false);
 
                     setTimeout(() => {
                         menuEntrySwitch(giganote.pages.authPage, giganote.pages.loading);
