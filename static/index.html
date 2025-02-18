@@ -13,22 +13,30 @@
         <title>Giganote</title>
     </head>
     <body>
-        <div class="app-window bobatron" Bt-Color="#ffffff" Bt-CM="1.3">
-            <div class="horizontal-container window-header">
-                <h3>Giganote</h3>
+        <header class="bobatron">
+            <div class="horizontal-container flex-aligncenter" style="width: fit-content">
+                <div class="giganote"></div>
+                <div class="vertical-divisor"></div>
+                <button class="bobatron" id="newTask" Bt-CM="0.5" style="display: none">New task</button>
             </div>
-            <div class="vertical-container flex-justifycenter inactive" id="authPage" style="height: 100%; max-width: 300px">
-                <div class="loader"></div>
+            <div class="horizontal-container flex-aligncenter" style="justify-content: flex-end; width: fit-content">
+                <div id="navBarLoader" class="loader loaderHidden"></div>
+                <button class="bobatron" id="logout" Bt-CM="0.5" style="display: none">Logout!</button>
             </div>
-            <div class="vertical-container flex-aligncenter inactive" id="mainPage" style="gap: 10px; height: 100%">
-                <div class="loader"></div>
-            </div>
-            <div class="vertical-container flex-aligncenter flex-justifycenter" id="loading" style="gap: 10px; height: 100%">
-                <div class="loader"></div>
-            </div>
+        </header>
+
+        <div class="vertical-container flex-justifycenter inactive" id="authPage" style="height: 100%; align-items: center">
+            <div class="loader"></div>
         </div>
+        <div class="vertical-container flex-aligncenter inactive" id="mainPage" style="gap: 10px; height: 100%">
+            <div class="loader"></div>
+        </div>
+        <div class="vertical-container flex-aligncenter flex-justifycenter" id="loading" style="gap: 10px; height: 100%">
+            <div class="loader"></div>
+        </div>
+
         <div class="footer">
-            <h5 style="text-align: center; color: #c17f21">SE-2331<br>Pavel Lukoyanov &amp; Maksat Sagyndyk</h5>
+            <h5 style="text-align: center; color: #bdc1ff">SE-2331<br>Pavel Lukoyanov &amp; Maksat Sagyndyk</h5>
         </div>
     </body>
 </html>

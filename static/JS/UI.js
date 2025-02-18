@@ -6,7 +6,6 @@ const menuEntrySwitch = (from, to) => {
 
     to.style.opacity = "0"
     to.style.scale = "0.7"
-    from.style.filter = "blur(10px)"
     setTimeout(() => {
         from.style.display = "none"
         to.style.display = "flex"
@@ -37,13 +36,40 @@ const shakeElement = (elem) => {
     setTimeout(() => { elem.classList.remove("shake"); }, 300);
 }
 
+const hideElement = (elem, status = true) => {
+    if (status) {
+        elem.style.transitionDuration = "0.3s"
+        elem.style.opacity = "0"
+        elem.style.scale = "0.7"
+        elem.style.filter = "blur(10px)"
+
+        setTimeout(() => {
+            elem.style.display = "none"
+            elem.style.filter = "blur(0px)"
+        }, 310)
+    } else {
+        elem.style.display = ""
+        elem.style.opacity = "0"
+        elem.style.scale = "0.7"
+
+        setTimeout(() => {
+            elem.style.transitionDuration = "0.3s"
+            elem.style.opacity = "1"
+            elem.style.scale = "1"
+
+            bobatron.scanner()
+        }, 10)
+    }
+}
 //
 
 const buildAuthPage = () => {
     giganote.pages.authPage.innerHTML = `
-        <h2>Welcome to Giganote!</h2>
-        <button class="bobatron" Bt-CM="0.5" id="registerButton">Register</button>
-        <button class="bobatron" Bt-CM="0.5" id="loginButton">Login</button>
+        <div class="app-window bobatron">
+            <h2>Welcome to Giganote!</h2>
+            <button class="bobatron" Bt-CM="0.5" id="registerButton">Register</button>
+            <button class="bobatron" Bt-CM="0.5" id="loginButton">Login</button>
+        </div>
     `
 
     const registerButton = document.getElementById("registerButton")
@@ -225,11 +251,18 @@ const buildAuthPage = () => {
 }
 
 const buildMainPage = () => {
+    const logoutButton = document.getElementById("logout"),
+        newTaskButton = document.getElementById("newTask");
+
+    hideElement(logoutButton, false)
+    hideElement(newTaskButton, false)
+
+
     let tasksHTML = ``
     for (let i of giganote.tasks) {
         tasksHTML += `
                 <div class="taskWrapper" id="${i._id}">
-                    <div class="task flex-justifyspacebetween bobatron ${i.completed ? "completed" : "incompleted"}" id="task-${i._id}" Bt-CM="0.5">
+                    <div class="task flex-justifyspacebetween bobatron ${i.completed ? "completed" : "incompleted"} flex-aligncenter" id="task-${i._id}" Bt-CM="0.5">
                         <div>
                             <b>${i.title}</b>
                             <p>${i.content}</p>  
@@ -242,21 +275,13 @@ const buildMainPage = () => {
     }
 
     giganote.pages.mainPage.innerHTML = `
-        <div class="horizontal-container flex-justifyspacebetween" style="width: 100%;">
-            <div class="horizontal-container flex-aligncenter"> 
-                <h3>${giganote.user.username}</h3>
-                <button class="bobatron" id="newTask" Bt-CM="0.5">New task</button>
-            </div>
-            <div class="horizontal-container flex-aligncenter" style="justify-content: flex-end"> 
-                <div id="navBarLoader" class="loader loaderHidden"></div>
-                <button class="bobatron" id="logout" Bt-CM="0.5">Logout!</button>
-            </div>
-        </div>
-        <div class="vertical-container" style="z-index: 2">
+        <div class="vertical-container">
+            <h2 style="margin: 20px 0">Welcome, ${giganote.user.username}!</h2>
+            
             ${tasksHTML}
            
             <div class="taskWrapper" id="newTaskDummy" style="padding-top: 60px; transition-duration: 0.3s; opacity: 0">
-                <div class="task flex-justifyspacebetween bobatron incompleted" Bt-CM="0.5">
+                <div class="task flex-justifyspacebetween bobatron incompleted flex-aligncenter" Bt-CM="0.5">
                     <div>
                         <b id="newTaskDummyTitle"></b>
                         <p id="newTaskDummyContent"></p>  
@@ -273,12 +298,14 @@ const buildMainPage = () => {
         giganote.storage.reset()
         menuEntrySwitch(giganote.pages.mainPage, giganote.pages.loading)
 
+        hideElement(logoutButton)
+        hideElement(newTaskButton)
+
         setTimeout(() => {
             initialize();
         }, 600);
     }
 
-    const newTaskButton = document.getElementById("newTask")
     const newTaskWindow = new smoothModal("newTaskButton", newTaskButton)
 
     newTaskWindow.modalWindowCSS = `background-color: #ffffff; border-radius: 25px; width: 350px; height: 421px; padding: 15px;`;
@@ -430,6 +457,8 @@ const initialize = async () => {
         buildAuthPage()
     } else {
         const authStatus = await giganote.getUser()
+
+        console.log(authStatus)
 
         if (authStatus) {
             console.log("super")

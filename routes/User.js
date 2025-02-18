@@ -14,6 +14,11 @@ router.get("/user", checkToken, async (req, res) => {
     try {
         const user = await User.findOne({ _id: req.decodedToken._id}, { password: 0, __v: 0 });
 
+        if (!user) {
+            console.log("[GET user] Not found!");
+            return res.status(404).json({error: "Not found!"})
+        }
+
         console.log("[GET user] Shared userinfo successfully.");
         res.status(200).json(user)
     } catch (e) {
