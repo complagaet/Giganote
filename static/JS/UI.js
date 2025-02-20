@@ -1,71 +1,7 @@
-const menuEntrySwitch = (from, to) => {
-    from.style.transitionDuration = "0.3s"
-    from.style.opacity = "0"
-    from.style.scale = "0.7"
-    from.style.filter = "blur(10px)"
-
-    to.style.opacity = "0"
-    to.style.scale = "0.7"
-    setTimeout(() => {
-        from.style.display = "none"
-        to.style.display = "flex"
-        bobatron.scanner()
-    }, 310)
-    setTimeout(() => {
-        to.style.transitionDuration = "0.3s"
-        to.style.opacity = "1"
-        to.style.scale = "1"
-        from.style.filter = "blur(0px)"
-        bobatron.scanner()
-    }, 315)
-}
-
-const uiLocker = (status = true) => {
-    document.querySelectorAll("button").forEach(e => {
-        status ? e.style.pointerEvents = "none" : e.style.pointerEvents = ""
-    })
-}
-
-const navBarLoader = (show = true, elemId = "navBarLoader") => {
-    const loader = document.getElementById(elemId).classList
-    show ? loader.remove("loaderHidden") : loader.add("loaderHidden")
-}
-
-const shakeElement = (elem) => {
-    elem.classList.add("mistake", "shake");
-    setTimeout(() => { elem.classList.remove("shake"); }, 300);
-}
-
-const hideElement = (elem, status = true) => {
-    if (status) {
-        elem.style.transitionDuration = "0.3s"
-        elem.style.opacity = "0"
-        elem.style.scale = "0.7"
-        elem.style.filter = "blur(10px)"
-
-        setTimeout(() => {
-            elem.style.display = "none"
-            elem.style.filter = "blur(0px)"
-        }, 310)
-    } else {
-        elem.style.display = ""
-        elem.style.opacity = "0"
-        elem.style.scale = "0.7"
-
-        setTimeout(() => {
-            elem.style.transitionDuration = "0.3s"
-            elem.style.opacity = "1"
-            elem.style.scale = "1"
-
-            bobatron.scanner()
-        }, 10)
-    }
-}
-//
-
-const buildAuthPage = () => {
+const buildAuthPage = (warning = "") => {
     giganote.pages.authPage.innerHTML = `
         <div class="app-window bobatron">
+            ${warning ? `<p style="color: red">${warning}</p>` : ""}
             <h2>Welcome to Giganote!</h2>
             <button class="bobatron" Bt-CM="0.5" id="registerButton">Register</button>
             <button class="bobatron" Bt-CM="0.5" id="loginButton">Login</button>
@@ -252,26 +188,35 @@ const buildAuthPage = () => {
 
 const buildMainPage = () => {
     const logoutButton = document.getElementById("logout"),
-        newTaskButton = document.getElementById("newTask");
+        newTaskButton = document.getElementById("newTask"),
+        adminButton = document.getElementById("admin");
 
     hideElement(logoutButton, false)
     hideElement(newTaskButton, false)
+
+    if (giganote.user.status === "admin") {
+        hideElement(adminButton, false)
+
+        adminButton.onclick = () => {
+            window.location.href = "admin"
+        }
+    }
 
 
     let tasksHTML = ``
     for (let i of giganote.tasks) {
         tasksHTML += `
-                <div class="taskWrapper" id="${i._id}">
-                    <div class="task flex-justifyspacebetween bobatron ${i.completed ? "completed" : "incompleted"} flex-aligncenter" id="task-${i._id}" Bt-CM="0.5">
-                        <div>
-                            <b>${i.title}</b>
-                            <p>${i.content}</p>  
-                        </div>
-                        <button class="iconButton ${i.completed ? "greenMark" : "grayMark"} completionTaskButton" taskId="${i._id}" completed="${i.completed ? "true" : "false"}"></button>  
-                    </div>         
-                    <button class="iconButton binButton deleteTaskButton" taskId="${i._id}"></button> 
-                </div>
-            `
+            <div class="taskWrapper" id="${i._id}">
+                <div class="task flex-justifyspacebetween bobatron ${i.completed ? "completed" : "incomplete"} flex-aligncenter" id="task-${i._id}" Bt-CM="0.5">
+                    <div>
+                        <b>${i.title}</b>
+                        <p>${i.content}</p>  
+                    </div>
+                    <button class="iconButton ${i.completed ? "greenMark" : "grayMark"} completionTaskButton" taskId="${i._id}" completed="${i.completed ? "true" : "false"}"></button>  
+                </div>         
+                <button class="iconButton binButton deleteTaskButton" taskId="${i._id}"></button> 
+            </div>
+        `
     }
 
     giganote.pages.mainPage.innerHTML = `
@@ -281,7 +226,7 @@ const buildMainPage = () => {
             ${tasksHTML}
            
             <div class="taskWrapper" id="newTaskDummy" style="padding-top: 60px; transition-duration: 0.3s; opacity: 0">
-                <div class="task flex-justifyspacebetween bobatron incompleted flex-aligncenter" Bt-CM="0.5">
+                <div class="task flex-justifyspacebetween bobatron incomplete flex-aligncenter" Bt-CM="0.5">
                     <div>
                         <b id="newTaskDummyTitle"></b>
                         <p id="newTaskDummyContent"></p>  
@@ -300,6 +245,7 @@ const buildMainPage = () => {
 
         hideElement(logoutButton)
         hideElement(newTaskButton)
+        hideElement(adminButton)
 
         setTimeout(() => {
             initialize();
@@ -427,8 +373,8 @@ const buildMainPage = () => {
 
             const entry = document.getElementById(`task-${i.getAttribute("taskId")}`);
             entry.transitionDuration = "0.2s"
-            entry.classList.remove("completed", "incompleted")
-            entry.classList.add(i.getAttribute("completed") === "false" ? "completed" : "incompleted")
+            entry.classList.remove("completed", "incomplete")
+            entry.classList.add(i.getAttribute("completed") === "false" ? "completed" : "incomplete")
 
             i.transitionDuration = "0.2s"
             i.style.opacity = "0"
@@ -461,10 +407,15 @@ const initialize = async () => {
         console.log(authStatus)
 
         if (authStatus) {
-            console.log("super")
-            await giganote.getTasks()
-            buildMainPage()
-            menuEntrySwitch(giganote.pages.loading, giganote.pages.mainPage)
+            if (giganote.user.status !== "ban") {
+                console.log("super")
+                await giganote.getTasks()
+                buildMainPage()
+                menuEntrySwitch(giganote.pages.loading, giganote.pages.mainPage)
+            } else {
+                buildAuthPage(`<b>You're banned!</b><br>Reason: ${giganote.user.banReason}`)
+                menuEntrySwitch(giganote.pages.loading, giganote.pages.authPage)
+            }
         } else {
             console.log("Auth error")
             buildAuthPage()
@@ -472,3 +423,16 @@ const initialize = async () => {
         }
     }
 }
+
+
+
+document.addEventListener("DOMContentLoaded", async () => {
+    bobatron.scanner()
+
+    giganote = new Giganote()
+    initialize()
+})
+
+window.addEventListener("resize", () => {
+    bobatron.scanner()
+})

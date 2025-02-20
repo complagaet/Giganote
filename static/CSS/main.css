@@ -14,7 +14,7 @@ body {
     align-items: center;
     padding: 105px 20px 20px 20px;
 }
-#mainPage {
+#mainPage, #adminPage {
     max-width: 900px;
 }
 .app-window {
@@ -97,7 +97,7 @@ textarea {
 .completed {
     background-color: #DDFFDD;
 }
-.incompleted {
+.incomplete {
     background-color: #ffffff;
 }
 .taskWrapper {
@@ -166,6 +166,26 @@ button:hover, .post:hover {
 .binButton {
     background-image: url("../SVG/bin.svg");
 }
+.viewButton {
+    background-image: url("../SVG/view.svg");
+}
+
+.banButton {
+    mask-image: url("../SVG/ban.svg");
+    background-color: #ff6a76 !important;
+}
+.adminButton {
+    mask-image: url("../SVG/admin.svg");
+    background-color: #ffb63f !important;
+}
+.userButton {
+    mask-image: url("../SVG/user.svg");
+    background-color: #7f9fff !important;
+}
+.statusButtonInactive {
+    background-color: #b3b3b3 !important;
+}
+
 .giganote {
     background-image: url("../SVG/giganote.svg");
     height: 32px;
@@ -173,6 +193,7 @@ button:hover, .post:hover {
     background-repeat: no-repeat;
     background-position: center;
 }
+
 /* HTML: <div class="loader"></div> */
 .loader {
     width: 15px;

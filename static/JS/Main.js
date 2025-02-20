@@ -1,15 +1,69 @@
+const menuEntrySwitch = (from, to) => {
+    from.style.transitionDuration = "0.3s"
+    from.style.opacity = "0"
+    from.style.scale = "0.7"
+    from.style.filter = "blur(10px)"
+
+    to.style.opacity = "0"
+    to.style.scale = "0.7"
+    setTimeout(() => {
+        from.style.display = "none"
+        to.style.display = "flex"
+        bobatron.scanner()
+    }, 310)
+    setTimeout(() => {
+        to.style.transitionDuration = "0.3s"
+        to.style.opacity = "1"
+        to.style.scale = "1"
+        from.style.filter = "blur(0px)"
+        bobatron.scanner()
+    }, 315)
+}
+
+const uiLocker = (status = true) => {
+    document.querySelectorAll("button").forEach(e => {
+        status ? e.style.pointerEvents = "none" : e.style.pointerEvents = ""
+    })
+}
+
+const navBarLoader = (show = true, elemId = "navBarLoader") => {
+    const loader = document.getElementById(elemId).classList
+    show ? loader.remove("loaderHidden") : loader.add("loaderHidden")
+}
+
+const shakeElement = (elem) => {
+    elem.classList.add("mistake", "shake");
+    setTimeout(() => { elem.classList.remove("shake"); }, 300);
+}
+
+const hideElement = (elem, status = true) => {
+    if (status) {
+        elem.style.transitionDuration = "0.3s"
+        elem.style.opacity = "0"
+        elem.style.scale = "0.7"
+        elem.style.filter = "blur(10px)"
+
+        setTimeout(() => {
+            elem.style.display = "none"
+            elem.style.filter = "blur(0px)"
+        }, 310)
+    } else {
+        elem.style.display = ""
+        elem.style.opacity = "0"
+        elem.style.scale = "0.7"
+
+        setTimeout(() => {
+            elem.style.transitionDuration = "0.3s"
+            elem.style.opacity = "1"
+            elem.style.scale = "1"
+
+            bobatron.scanner()
+        }, 10)
+    }
+}
+//
+
 let giganote
-
-document.addEventListener("DOMContentLoaded", async () => {
-    bobatron.scanner()
-
-    giganote = new Giganote()
-    initialize()
-})
-
-window.addEventListener("resize", () => {
-    bobatron.scanner()
-})
 
 class Giganote {
     storage = new Storage("Giganote", { token: null })
@@ -22,7 +76,7 @@ class Giganote {
         mainPage: document.querySelector("#mainPage"),
     }
 
-    async request(route, method= "POST", json= {}, root = window.location.href) {
+    async request(route, method= "POST", json= {}, root = `${window.location.origin}/`) {
         let request = {
             method: method,
             headers: {
@@ -123,6 +177,36 @@ class Giganote {
         }
 
         return json
+    }
+
+    async ADMINGetUserList() {
+        let res = await this.request("api/admin/users", "GET")
+
+        if (res.ok) {
+            return await res.json()
+        } else {
+            return 0
+        }
+    }
+
+    async ADMINPatchUser(id, patch) {
+        let res = await this.request(`api/admin/user/${id}`, "PATCH", patch)
+
+        if (res.ok) {
+            return await res.json()
+        } else {
+            return 0
+        }
+    }
+
+    async ADMINGetTasks(id) {
+        let res = await this.request(`api/admin/user/${id}/tasks`, "GET")
+
+        if (res.ok) {
+            return await res.json()
+        } else {
+            return 0
+        }
     }
 
     constructor() {}

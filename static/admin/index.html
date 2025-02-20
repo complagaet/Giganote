@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="../CSS/LazyLukPack.css">
+        <link rel="stylesheet" href="../CSS/main.css">
+        <script src="../JS/Bobatron.js"></script>
+        <script src="../JS/BobatronDynamic.js"></script>
+        <script src="../JS/Storage.js"></script>
+        <script src="../JS/Main.js"></script>
+        <script src="../JS/Admin.js"></script>
+        <title>Giganote</title>
+    </head>
+    <body>
+        <header class="bobatron">
+            <div class="horizontal-container flex-aligncenter" style="width: fit-content">
+                <div class="giganote"></div>
+                <div class="vertical-divisor"></div>
+                <b>Admin</b>
+                <div class="vertical-divisor"></div>
+                <button class="bobatron" id="userMode" Bt-CM="0.5" style="display: none">Leave</button>
+            </div>
+            <div class="horizontal-container flex-aligncenter" style="justify-content: flex-end; width: fit-content">
+                <div id="navBarLoader" class="loader loaderHidden"></div>
+            </div>
+        </header>
+
+        <div class="flex-justifycenter" id="adminPage" style="height: 100%; width: 100%; gap: 15px">
+            <div class="vertical-container" id="userList" style="width: 100%">
+                <h2 style="margin: 20px 0">Users</h2>
+                <div class="loader"></div>
+            </div>
+
+            <div class="vertical-container" id="usersTasks" style="width: 100%">
+                <h2 style="margin: 20px 0">...</h2>
+            </div>
+        </div>
+        <div class="vertical-container flex-aligncenter flex-justifycenter inactive" id="loading" style="gap: 10px; height: 100%">
+            <div class="loader"></div>
+        </div>
+
+        <div class="footer">
+            <h5 style="text-align: center; color: #bdc1ff">SE-2331<br>Pavel Lukoyanov &amp; Maksat Sagyndyk</h5>
+        </div>
+    </body>
+</html>
