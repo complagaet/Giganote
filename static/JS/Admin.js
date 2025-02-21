@@ -26,8 +26,8 @@ const buildUserList = () => {
 
                     <div class="flex-column" style="gap: 10px">
                         <p><b>id: </b>${item._id}</p>
-                        <p><b>createdAt: </b>${item.createdAt}</p>
-                        <p><b>updatedAt: </b>${item.updatedAt}</p>
+                        <p><b>createdAt:<br></b>${new Date(item.createdAt)}</p>
+                        <p><b>updatedAt:<br></b>${new Date(item.updatedAt)}</p>
                         <p id="banReason-${item._id}"><b>banReason: </b>${item.banReason}</p>
                     </div>
                 </div>
