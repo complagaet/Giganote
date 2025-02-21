@@ -8,17 +8,39 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+}
 
-}
+
+
+/* Для WebKit-браузеров (Chrome, Safari, новый Edge, Opera) */
 *::-webkit-scrollbar {
-	width: 3px;
-	height: 3px;
-	background-color: #FFFFFF;
+	width: 2px;
+	height: 2px;
+	background-color: transparent;
 }
+
 *::-webkit-scrollbar-thumb {
-	background-color: #000000;
-	border-radius: 5px;
+	background-color: #434343;
+	border-radius: 2px;
+	width: 2px;
 }
+
+/* Для Firefox */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: #434343 transparent;
+}
+
+/* Для старого Edge (до Chromium) и IE */
+* {
+	-ms-overflow-style: none; /* Скрывает стандартный скролл */
+}
+
+*::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+
 
 .flex {
 	display: flex;

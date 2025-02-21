@@ -31,7 +31,10 @@ const buildUserList = () => {
                         <p id="banReason-${item._id}"><b>banReason: </b>${item.banReason}</p>
                     </div>
                 </div>
-                <button userId="${item._id}" username="${item.username}" class="viewTasksButton iconButton viewButton"></button>
+                <div class="flex-column flex-justifyspacebetween">
+                    <button userId="${item._id}" username="${item.username}" class="viewTasksButton iconButton viewButton"></button>
+                    <button userId="${item._id}" class="deleteUserButton iconButton binButton"></button>
+                </div>
             </div>
         `
     })
@@ -40,6 +43,30 @@ const buildUserList = () => {
         <h2 style="margin: 20px 0">Users</h2>
         ${usersHtml.join("")}
     `
+
+    document.querySelectorAll(".deleteUserButton").forEach(item => {
+        const id = item.getAttribute("userId")
+
+        item.onclick = async () => {
+            if (!confirm("You sure want to delete this user?")) {
+                return
+            }
+
+            uiLocker()
+            navBarLoader()
+
+            const res = await giganote.ADMINDeleteUser(id)
+
+            if (res) {
+                document.getElementById(`user-${id}`).style.display = "none"
+            } else {
+                alert("error")
+            }
+
+            uiLocker(false)
+            navBarLoader(false)
+        }
+    })
 
     document.querySelectorAll(".viewTasksButton").forEach(item => {
         const id = item.getAttribute("userId"),

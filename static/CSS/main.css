@@ -6,7 +6,6 @@
 }
 body {
     background-color: #e3e6ff;
-    height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -61,6 +60,12 @@ header {
     display: flex;
     flex-direction: column;
     gap: 10px
+}
+.scrollable-vertical-container {
+    width: 100%;
+    min-width: 300px;
+    max-height: calc(100vh - 125px);
+    overflow-y: auto;
 }
 p {
     font-size: 15px;
@@ -216,5 +221,7 @@ button:hover, .post:hover {
 }
 
 @media screen and (max-width: 600px) {
-
+    #adminPage {
+        justify-content: flex-start !important;
+    }
 }

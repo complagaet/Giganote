@@ -18,24 +18,24 @@
                 <div class="giganote"></div>
                 <div class="vertical-divisor"></div>
                 <b>Admin</b>
-                <div class="vertical-divisor"></div>
-                <button class="bobatron" id="userMode" Bt-CM="0.5" style="display: none">Leave</button>
             </div>
             <div class="horizontal-container flex-aligncenter" style="justify-content: flex-end; width: fit-content">
                 <div id="navBarLoader" class="loader loaderHidden"></div>
+                <button class="bobatron" id="userMode" Bt-CM="0.5" style="display: none">Leave</button>
             </div>
         </header>
 
-        <div class="flex-justifycenter" id="adminPage" style="height: 100%; width: 100%; gap: 15px">
-            <div class="vertical-container" id="userList" style="width: 100%">
+        <div class="flex-justifycenter" id="adminPage" style="width: 100%; gap: 15px">
+            <div class="vertical-container scrollable-vertical-container" id="userList" style="">
                 <h2 style="margin: 20px 0">Users</h2>
-                <div class="loader"></div>
+                <div class="loader" style="margin: 25px"></div>
             </div>
 
-            <div class="vertical-container" id="usersTasks" style="width: 100%">
+            <div class="vertical-container scrollable-vertical-container" id="usersTasks" style="">
                 <h2 style="margin: 20px 0">...</h2>
             </div>
         </div>
+
         <div class="vertical-container flex-aligncenter flex-justifycenter inactive" id="loading" style="gap: 10px; height: 100%">
             <div class="loader"></div>
         </div>

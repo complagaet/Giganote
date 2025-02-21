@@ -209,5 +209,15 @@ class Giganote {
         }
     }
 
+    async ADMINDeleteUser(id) {
+        let res = await this.request(`api/admin/user/${id}`, "DELETE")
+
+        if (res.ok) {
+            return await res.json()
+        } else {
+            return 0
+        }
+    }
+
     constructor() {}
 }
