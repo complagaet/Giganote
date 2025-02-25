@@ -14,8 +14,8 @@ Giganote is a task management application built with Node.js and Express. It pro
 ### Installation
 1. Clone the repository:
    ```sh
-   git clone <repository_url>
-   cd Giganote-main
+   git clone https://github.com/complagaet/Giganote.git
+   cd Giganote
    ```
 2. Install dependencies:
    ```sh
@@ -47,13 +47,13 @@ Giganote is a task management application built with Node.js and Express. It pro
 
 ### User
 - `GET /user` - Retrieve user details (requires authentication)
-    - Headers: `{ Authorization: "Bearer <token>" }`
+    - Headers: `{ Authorization: "<token>" }`
     - Response: `{ "username": "user", "email": "user@example.com" }`
 
 ### Admin
 - `GET /admin/users` - Get all users (admin only)
 - `PATCH /admin/user/:id` - Update user details (admin only)
-    - Request Body (example): `{ "status": "banned", "banReason": "Violation of terms" }`
+    - Request Body (example): `{ "status": "ban", "banReason": "Violation of terms" }`
 - `DELETE /admin/user/:id` - Delete a user and all their tasks (admin only)
 - `GET /admin/user/:id/tasks` - Retrieve tasks of a specific user (admin only)
 
