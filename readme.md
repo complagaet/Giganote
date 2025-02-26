@@ -38,32 +38,32 @@ Giganote is a task management application built with Node.js and Express. It pro
 
 ## API Documentation
 ### Authentication
-- `POST /register` - Register a new user
+- `POST /api/register` - Register a new user
     - Request Body: `{ "username": "user", "email": "user@example.com", "password": "password123" }`
     - Response: `{ "message": "User created successfully." }`
-- `POST /login` - Login and receive a JWT token
+- `POST /api/login` - Login and receive a JWT token
     - Request Body: `{ "email": "user@example.com", "password": "password123" }`
     - Response: `{ "message": "Login successfully.", "token": "jwt_token_here" }`
 
 ### User
-- `GET /user` - Retrieve user details (requires authentication)
+- `GET /api/user` - Retrieve user details (requires authentication)
     - Headers: `{ Authorization: "<token>" }`
     - Response: `{ "username": "user", "email": "user@example.com" }`
 
 ### Admin
-- `GET /admin/users` - Get all users (admin only)
-- `PATCH /admin/user/:id` - Update user details (admin only)
+- `GET /api/admin/users` - Get all users (admin only)
+- `PATCH /api/admin/user/:id` - Update user details (admin only)
     - Request Body (example): `{ "status": "ban", "banReason": "Violation of terms" }`
-- `DELETE /admin/user/:id` - Delete a user and all their tasks (admin only)
-- `GET /admin/user/:id/tasks` - Retrieve tasks of a specific user (admin only)
+- `DELETE /api/admin/user/:id` - Delete a user and all their tasks (admin only)
+- `GET /api/admin/user/:id/tasks` - Retrieve tasks of a specific user (admin only)
 
 ### Tasks
-- `POST /task` - Create a new task (requires authentication)
+- `POST /api/task` - Create a new task (requires authentication)
     - Request Body: `{ "title": "Task 1", "content": "Task details" }`
     - Response: `{ "message": "Task saved." }`
-- `PATCH /task/:id` - Update a task
+- `PATCH /api/task/:id` - Update a task
     - Request Body (example): `{ "title": "Updated Title" }`
-- `GET /tasks` - Retrieve all tasks of the authenticated user
-- `GET /task/:id` - Retrieve details of a specific task
-- `DELETE /task/:id` - Delete a task
+- `GET /api/tasks` - Retrieve all tasks of the authenticated user
+- `GET /api/task/:id` - Retrieve details of a specific task
+- `DELETE /api/task/:id` - Delete a task
 
