@@ -48,12 +48,12 @@ function walk(dir, issues = []) {
 const results = walk(process.cwd()).filter(issue => !issue.file.includes('scripts/check-todos.js'));
 
 if (results.length > 0) {
-    console.error('❌ Найдены TODO / FIXME комментарии:');
+    console.error('❌ TODO / FIXME comments found:');
     results.forEach(issue => {
         console.error(`- ${issue.file}:${issue.line} → ${issue.content}`);
     });
     process.exit(1);
 } else {
-    console.log('✅ TODO / FIXME не найдены.');
+    console.log('✅ TODO / FIXME not found.');
     process.exit(0);
 }
