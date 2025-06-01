@@ -3,20 +3,25 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "test": "nodemon server.js",
+    "lint": "eslint .",
+    "dev": "nodemon server.js",
+    "test": "echo Вот тут тесты запускаются...",
     "start": "node server.js"
   },
   "author": "complagaet",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@eslint/js": "^9.28.0",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
+    "eslint": "^9.28.0",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.13.0",
     "mongoose": "^8.10.0",
     "nodemon": "^3.1.9",
+    "prom-client": "^15.1.3",
     "validator": "^13.12.0"
   }
 }

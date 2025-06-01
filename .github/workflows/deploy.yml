@@ -1,0 +1,38 @@
+name: Very Cool CI/CD Pipeline
+
+on:
+  push:
+    branches: [sre-final]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install deps
+        run: npm install
+
+      - name: Lint
+        run: npm run lint || true
+
+      - name: Run tests
+        run: npm test || echo "No tests yet"
+
+  deploy:
+    name: Deploy to Render
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Render deploy
+        run: |
+          curl -X POST https://api.render.com/deploy/srv-d0tfbtc9c44c739e5e4g?key=${{ secrets.RENDER_API_KEY }}

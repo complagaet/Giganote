@@ -5,8 +5,8 @@ const schema = new Schema({
     content: { type: String, required: true },
     completed: { type: Boolean, default: false },
     author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-})
+});
 
-const Task = model("task", schema);
+const Task = model('task', schema);
 
-module.exports = Task
+module.exports = Task;

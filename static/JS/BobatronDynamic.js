@@ -1,5 +1,5 @@
 class BobatronDynamic {
-    name = String
+    name = String;
 
     constructor(name) {
         this.name = name;
@@ -20,13 +20,13 @@ class smoothModal extends BobatronDynamic {
     collapsedElement; // Original Collapsed Element
     collapsedElementClone; // Cloned Collapsed Element (Creates automatically)
     collapsedElementCloneCSS; // Addition CSS if cloned layout is broken
-    collapsedElementCloneCSSSegueAddition
+    collapsedElementCloneCSSSegueAddition;
     modalWindow; // Modal Window Object
     modalWindowContent; // Modal Window Content in HTML String format
-    modalWindowCSS = "height: 600px; width: 800px"; // Addition CSS to Modal Window
+    modalWindowCSS = 'height: 600px; width: 800px'; // Addition CSS to Modal Window
     modalScreen; // Wrapper
 
-    escCollapse = true
+    escCollapse = true;
 
     collapsedElementCloneHidingTimeout = 0;
     expandingTime = 0.5;
@@ -35,20 +35,20 @@ class smoothModal extends BobatronDynamic {
     zIndex = 9;
 
     copyClassesFromCollapsedElementToItsClone = true;
-    forbiddenClassesToCopy = ["clickable"]
+    forbiddenClassesToCopy = ['clickable'];
 
-    modalWindowBobatronize = true
-    BtCM = 1.5
+    modalWindowBobatronize = true;
+    BtCM = 1.5;
 
     constructor(name, collapsedElement) {
         super(name);
-        this.collapsedElement = collapsedElement
+        this.collapsedElement = collapsedElement;
 
         if (document.getElementById(`BobatronModal_${name}`)) {
-            document.getElementById(`BobatronModal_${name}`).remove()
+            document.getElementById(`BobatronModal_${name}`).remove();
         }
 
-        this.modalScreen = document.createElement("div");
+        this.modalScreen = document.createElement('div');
         this.modalScreen.id = `BobatronModal_${name}`;
         this.modalScreen.style.cssText = `
             z-index: ${this.zIndex};
@@ -56,20 +56,20 @@ class smoothModal extends BobatronDynamic {
             top: 0;
             left: 0;
             padding: 20px;
-        `
-        document.getElementsByTagName("body")[0].appendChild(this.modalScreen);
+        `;
+        document.getElementsByTagName('body')[0].appendChild(this.modalScreen);
     }
 
     cloneCollapsedElement() {
-        let collapsedElementParams = this.collapsedElement.getBoundingClientRect()
+        let collapsedElementParams = this.collapsedElement.getBoundingClientRect();
 
-        let modalWindow = document.createElement("div");
+        let modalWindow = document.createElement('div');
         modalWindow.style.cssText = `
             position: absolute;
             transition-duration: 0.3s;
             clip-path: inset(0px 0px);
-        `
-        modalWindow.style.cssText += this.modalWindowCSS
+        `;
+        modalWindow.style.cssText += this.modalWindowCSS;
         // Copying HW and Top/Left properties
         modalWindow.style.top = `${collapsedElementParams.top}px`;
         modalWindow.style.left = `${collapsedElementParams.left}px`;
@@ -77,63 +77,63 @@ class smoothModal extends BobatronDynamic {
         modalWindow.style.height = `${collapsedElementParams.height}px`;
 
         // Making visual copy of collapsedElement
-        let collapsedElementClone = document.createElement("div");
+        let collapsedElementClone = document.createElement('div');
         collapsedElementClone.style.cssText += `
             height: 100%;
             width: 100%;
             position: absolute;
             transition-duration: 1s;
             z-index: ${this.zIndex};
-        `
-        collapsedElementClone.style.cssText += this.collapsedElementCloneCSS
+        `;
+        collapsedElementClone.style.cssText += this.collapsedElementCloneCSS;
         collapsedElementClone.innerHTML = this.collapsedElement.innerHTML;
 
         if (this.copyClassesFromCollapsedElementToItsClone) {
             for (let i of String(this.collapsedElement.classList).split(' ')) {
                 if (!this.forbiddenClassesToCopy.includes(i)) {
                     try {
-                        collapsedElementClone.classList.add(i)
+                        collapsedElementClone.classList.add(i);
                     } catch (e) {
-                        console.log(`[BobatronDynamic] no classes in ${this.name}`)
+                        console.log(`[BobatronDynamic] no classes in ${this.name}`);
                     }
                 }
             }
         }
 
-        this.collapsedElementClone = collapsedElementClone
+        this.collapsedElementClone = collapsedElementClone;
         modalWindow.appendChild(collapsedElementClone);
 
         this.modalScreen.style.cssText += `
             height: 100%;
             width: 100%;
-        `
+        `;
 
-        this.modalWindow = modalWindow
-        this.modalScreen.appendChild(modalWindow)
+        this.modalWindow = modalWindow;
+        this.modalScreen.appendChild(modalWindow);
     }
 
     insertModalWindowContent() {
         if (!document.getElementById(`BobatronModal_ModalWindowContent_${name}`)) {
-            let modalWindowContent = document.createElement("div");
+            let modalWindowContent = document.createElement('div');
             modalWindowContent.style.cssText += `
                 height: 100%;
                 width: 100%;
-            `
+            `;
             modalWindowContent.id = `BobatronModal_ModalWindowContent_${name}`;
-            this.modalWindow.appendChild(modalWindowContent)
+            this.modalWindow.appendChild(modalWindowContent);
         }
-        document.getElementById(`BobatronModal_ModalWindowContent_${name}`).innerHTML = this.modalWindowContent
+        document.getElementById(`BobatronModal_ModalWindowContent_${name}`).innerHTML = this.modalWindowContent;
     }
 
     modalExpand() {
-        let modalScreenParams = this.modalScreen.getBoundingClientRect()
+        let modalScreenParams = this.modalScreen.getBoundingClientRect();
 
         this.modalWindow.style.cssText = `
             position: absolute;
             transition-duration: ${this.expandingTime}s;
             clip-path: inset(0px 0px);
             ${this.modalWindowCSS};
-        `
+        `;
 
         if (
             parseFloat(this.modalWindow.style.width) >
@@ -161,63 +161,63 @@ class smoothModal extends BobatronDynamic {
             `;
         }
 
-        this.modalWindow.style.left = `${(modalScreenParams.width / 2) - (parseFloat(this.modalWindow.style.width) / 2)}px`
-        this.modalWindow.style.top = `${(modalScreenParams.height / 2) - (parseFloat(this.modalWindow.style.height) / 2)}px`
+        this.modalWindow.style.left = `${(modalScreenParams.width / 2) - (parseFloat(this.modalWindow.style.width) / 2)}px`;
+        this.modalWindow.style.top = `${(modalScreenParams.height / 2) - (parseFloat(this.modalWindow.style.height) / 2)}px`;
 
-        this.collapsedElementClone.style.cssText += this.collapsedElementCloneCSSSegueAddition
+        this.collapsedElementClone.style.cssText += this.collapsedElementCloneCSSSegueAddition;
 
-        this.insertModalWindowContent()
+        this.insertModalWindowContent();
 
         setTimeout(() => {
             if (this.modalWindowBobatronize) {
                 bobatron.toCSSmask(bobatron.moveXY(this.modalWindow.offsetWidth, this.modalWindow.offsetHeight, this.BtCM), this.modalWindow);
             }
-        }, this.expandingTime * 1000 + 1)
+        }, this.expandingTime * 1000 + 1);
 
 
         setTimeout(() => {
-            this.collapsedElementClone.style.opacity = `0`
+            this.collapsedElementClone.style.opacity = '0';
 
             if (this.escCollapse) {
                 let escCollapse = (ev) => {
-                    if (ev.key === "Escape") {
+                    if (ev.key === 'Escape') {
                         this.collapse();
-                        document.removeEventListener("keydown", escCollapse)
+                        document.removeEventListener('keydown', escCollapse);
                     }
-                }
-                document.addEventListener("keydown", escCollapse)
+                };
+                document.addEventListener('keydown', escCollapse);
             }
-        }, (this.expandingTime * 1000) + (this.collapsedElementCloneHidingTimeout * 1000))
+        }, (this.expandingTime * 1000) + (this.collapsedElementCloneHidingTimeout * 1000));
 
         setTimeout(() => {
-            this.collapsedElementClone.style.display = `none`
-        }, (this.expandingTime * 1000) + (this.collapsedElementCloneHidingTimeout * 1000) +  (parseFloat(this.collapsedElementClone.style.transitionDuration) * 1000))
+            this.collapsedElementClone.style.display = 'none';
+        }, (this.expandingTime * 1000) + (this.collapsedElementCloneHidingTimeout * 1000) +  (parseFloat(this.collapsedElementClone.style.transitionDuration) * 1000));
     }
 
     expand() {
-        this.collapsedElement.style.visibility = "hidden"
-        this.collapsedElement.style.opacity = "0"
-        this.collapsedElement.style.pointerEvents = "none"
+        this.collapsedElement.style.visibility = 'hidden';
+        this.collapsedElement.style.opacity = '0';
+        this.collapsedElement.style.pointerEvents = 'none';
 
-        this.modalScreen.style.display = 'block'
-        this.modalScreen.style.transitionDuration = '0.5s'
+        this.modalScreen.style.display = 'block';
+        this.modalScreen.style.transitionDuration = '0.5s';
 
-        this.cloneCollapsedElement()
+        this.cloneCollapsedElement();
         setTimeout(() => {
-            this.modalExpand()
-            this.modalScreen.style.backgroundColor = "#00000088"
-        }, 100)
+            this.modalExpand();
+            this.modalScreen.style.backgroundColor = '#00000088';
+        }, 100);
     }
 
     collapse() {
-        this.collapsedElementClone.style.display = `flex`
+        this.collapsedElementClone.style.display = 'flex';
 
         setTimeout(() => {
-            this.collapsedElementClone.style.opacity = `1`
-        }, 2)
+            this.collapsedElementClone.style.opacity = '1';
+        }, 2);
 
         setTimeout(() => {
-            let collapsedElementParams = this.collapsedElement.getBoundingClientRect()
+            let collapsedElementParams = this.collapsedElement.getBoundingClientRect();
             this.modalWindow.style.cssText = `
                 position: absolute;
                 top: ${collapsedElementParams.top}px;
@@ -226,28 +226,28 @@ class smoothModal extends BobatronDynamic {
                 height: ${collapsedElementParams.height}px !important;
                 transition-duration: ${this.collapsingTime}s;
                 clip-path: inset(0px 0px);
-            `
+            `;
 
             this.collapsedElementClone.style.cssText += `
                 ${this.collapsedElementCloneCSS};
                 transition-duration: 1s;
-            `
+            `;
 
-            this.modalScreen.style.backgroundColor = ""
-            this.modalWindow.style.cssText += this.modalWindowCSS
-        }, parseFloat(this.collapsedElementClone.style.transitionDuration) * 500)
+            this.modalScreen.style.backgroundColor = '';
+            this.modalWindow.style.cssText += this.modalWindowCSS;
+        }, parseFloat(this.collapsedElementClone.style.transitionDuration) * 500);
 
-        this.collapsedElement.style.opacity = "1"
-        this.collapsedElement.style.pointerEvents = ""
-
-        setTimeout(() => {
-            this.collapsedElement.style.visibility = ""
-        }, (parseFloat(this.collapsedElementClone.style.transitionDuration) * 1000) + (this.collapsingTime * 1000) + 1)
+        this.collapsedElement.style.opacity = '1';
+        this.collapsedElement.style.pointerEvents = '';
 
         setTimeout(() => {
-            this.modalScreen.style.display = "none"
-            this.modalScreen.innerHTML = ""
-        }, (parseFloat(this.collapsedElementClone.style.transitionDuration) * 1000) + (this.collapsingTime * 1000) + 20)
+            this.collapsedElement.style.visibility = '';
+        }, (parseFloat(this.collapsedElementClone.style.transitionDuration) * 1000) + (this.collapsingTime * 1000) + 1);
+
+        setTimeout(() => {
+            this.modalScreen.style.display = 'none';
+            this.modalScreen.innerHTML = '';
+        }, (parseFloat(this.collapsedElementClone.style.transitionDuration) * 1000) + (this.collapsingTime * 1000) + 20);
     }
 }
 

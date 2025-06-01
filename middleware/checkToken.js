@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 
 const jwt = require('jsonwebtoken');
 
@@ -7,17 +7,17 @@ const checkToken = (req, res, next) => {
         const token = req.header('Authorization');
 
         if (!token) {
-            console.log("[checkToken] Access denied.");
-            return res.status(401).json({ error: "Access denied." })
+            console.log('[checkToken] Access denied.');
+            return res.status(401).json({ error: 'Access denied.' });
         }
 
         req.decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
-        next()
+        next();
     } catch (e) {
-        console.log("[checkToken] Invalid token.");
-        res.status(401).json({ error: "Invalid token." })
+        console.log('[checkToken] Invalid token.');
+        res.status(401).json({ error: 'Invalid token.' });
     }
-}
+};
 
 module.exports = checkToken;

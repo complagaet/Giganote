@@ -1,19 +1,19 @@
-const buildAuthPage = (warning = "") => {
+const buildAuthPage = (warning = '') => {
     giganote.pages.authPage.innerHTML = `
         <div class="app-window bobatron">
-            ${warning ? `<p style="color: red">${warning}</p>` : ""}
+            ${warning ? `<p style="color: red">${warning}</p>` : ''}
             <h2>Welcome to Giganote!</h2>
             <button class="bobatron" Bt-CM="0.5" id="registerButton">Register</button>
             <button class="bobatron" Bt-CM="0.5" id="loginButton">Login</button>
         </div>
-    `
+    `;
 
-    const registerButton = document.getElementById("registerButton")
-    const registerWindow = new smoothModal("registerWindow", registerButton)
+    const registerButton = document.getElementById('registerButton');
+    const registerWindow = new smoothModal('registerWindow', registerButton);
 
-    registerWindow.modalWindowCSS = `background-color: #ffffff; border-radius: 25px; width: 350px; height: 421px; padding: 15px;`;
-    registerWindow.collapsedElementCloneCSS = `background-color: #e4e4e4; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 15px; top: 0; left: 0; transition-duration: 0.4s`;
-    registerWindow.collapsedElementCloneCSSSegueAddition = `border-radius: 20px`;
+    registerWindow.modalWindowCSS = 'background-color: #ffffff; border-radius: 25px; width: 350px; height: 421px; padding: 15px;';
+    registerWindow.collapsedElementCloneCSS = 'background-color: #e4e4e4; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 15px; top: 0; left: 0; transition-duration: 0.4s';
+    registerWindow.collapsedElementCloneCSSSegueAddition = 'border-radius: 20px';
     registerWindow.expandingTime = 0.4;
     registerWindow.collapsingTime = 0.4;
     registerWindow.collapsedElementCloneHidingTimeout = -0.1;
@@ -44,42 +44,42 @@ const buildAuthPage = (warning = "") => {
                     <p style="color: red" id="registerError">&nbsp;</p>
                 </div>
             </div>
-        `
+        `;
 
-        registerWindow.expand()
+        registerWindow.expand();
 
         setTimeout(() => {
-            document.getElementById("closeRegisterWindow").onclick = () => {
+            document.getElementById('closeRegisterWindow').onclick = () => {
                 registerWindow.collapse();
             };
 
-            const username = document.getElementById("registerUsername"),
-                email = document.getElementById("registerEmail"),
-                password = document.getElementById("registerPassword"),
-                errorContainer = document.getElementById("registerError");
+            const username = document.getElementById('registerUsername'),
+                email = document.getElementById('registerEmail'),
+                password = document.getElementById('registerPassword'),
+                errorContainer = document.getElementById('registerError');
 
-            document.getElementById("registerSubmit").onclick = async () => {
+            document.getElementById('registerSubmit').onclick = async () => {
                 const usernameValue = username.value.trim();
                 const emailValue = email.value.trim();
                 const passwordValue = password.value.trim();
 
                 if (!usernameValue || !emailValue || !passwordValue) {
-                    errorContainer.innerHTML = "Username, email, and password cannot be empty";
+                    errorContainer.innerHTML = 'Username, email, and password cannot be empty';
                     return;
                 }
 
                 if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
-                    errorContainer.innerHTML = "Please enter a valid email address";
+                    errorContainer.innerHTML = 'Please enter a valid email address';
                     return;
                 }
 
-                navBarLoader(true, "authLoader")
-                uiLocker()
+                navBarLoader(true, 'authLoader');
+                uiLocker();
                 const result = await giganote.register(usernameValue, emailValue, passwordValue);
 
                 if (result.error) {
                     errorContainer.innerHTML = result.error;
-                    navBarLoader(false, "authLoader");
+                    navBarLoader(false, 'authLoader');
                     uiLocker(false);
                 } else {
                     registerWindow.collapse();
@@ -96,16 +96,16 @@ const buildAuthPage = (warning = "") => {
             };
         }, 600);
 
-    }
+    };
 
     // LOGIN
 
-    const loginButton = document.getElementById("loginButton")
-    const loginWindow = new smoothModal("loginWindow", loginButton)
+    const loginButton = document.getElementById('loginButton');
+    const loginWindow = new smoothModal('loginWindow', loginButton);
 
-    loginWindow.modalWindowCSS = `background-color: #ffffff; border-radius: 25px; width: 350px; height: 421px; padding: 15px;`;
-    loginWindow.collapsedElementCloneCSS = `background-color: #e4e4e4; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 15px; top: 0; left: 0; transition-duration: 0.4s`;
-    loginWindow.collapsedElementCloneCSSSegueAddition = `border-radius: 20px`;
+    loginWindow.modalWindowCSS = 'background-color: #ffffff; border-radius: 25px; width: 350px; height: 421px; padding: 15px;';
+    loginWindow.collapsedElementCloneCSS = 'background-color: #e4e4e4; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 15px; top: 0; left: 0; transition-duration: 0.4s';
+    loginWindow.collapsedElementCloneCSSSegueAddition = 'border-radius: 20px';
     loginWindow.expandingTime = 0.4;
     loginWindow.collapsingTime = 0.4;
     loginWindow.collapsedElementCloneHidingTimeout = -0.1;
@@ -133,40 +133,40 @@ const buildAuthPage = (warning = "") => {
                     <p style="color: red" id="loginError">&nbsp;</p>
                 </div>
             </div>
-        `
+        `;
 
-        loginWindow.expand()
+        loginWindow.expand();
 
         setTimeout(() => {
-            document.getElementById("closeLoginWindow").onclick = () => {
+            document.getElementById('closeLoginWindow').onclick = () => {
                 loginWindow.collapse();
             };
 
-            const email = document.getElementById("loginEmail"),
-                password = document.getElementById("loginPassword"),
-                errorContainer = document.getElementById("loginError");
+            const email = document.getElementById('loginEmail'),
+                password = document.getElementById('loginPassword'),
+                errorContainer = document.getElementById('loginError');
 
-            document.getElementById("loginSubmit").onclick = async () => {
+            document.getElementById('loginSubmit').onclick = async () => {
                 const emailValue = email.value.trim();
                 const passwordValue = password.value.trim();
 
                 if (!emailValue || !passwordValue) {
-                    errorContainer.innerHTML = "Email and password cannot be empty";
+                    errorContainer.innerHTML = 'Email and password cannot be empty';
                     return;
                 }
 
                 if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
-                    errorContainer.innerHTML = "Please enter a valid email address";
+                    errorContainer.innerHTML = 'Please enter a valid email address';
                     return;
                 }
 
-                navBarLoader(true, "authLoader")
-                uiLocker()
+                navBarLoader(true, 'authLoader');
+                uiLocker();
                 const result = await giganote.login(emailValue, passwordValue);
 
                 if (result.error) {
                     errorContainer.innerHTML = result.error;
-                    navBarLoader(false, "authLoader");
+                    navBarLoader(false, 'authLoader');
                     uiLocker(false);
                 } else {
                     loginWindow.collapse();
@@ -183,40 +183,40 @@ const buildAuthPage = (warning = "") => {
             };
         }, 600);
 
-    }
-}
+    };
+};
 
 const buildMainPage = () => {
-    const logoutButton = document.getElementById("logout"),
-        newTaskButton = document.getElementById("newTask"),
-        adminButton = document.getElementById("admin");
+    const logoutButton = document.getElementById('logout'),
+        newTaskButton = document.getElementById('newTask'),
+        adminButton = document.getElementById('admin');
 
-    hideElement(logoutButton, false)
-    hideElement(newTaskButton, false)
+    hideElement(logoutButton, false);
+    hideElement(newTaskButton, false);
 
-    if (giganote.user.status === "admin") {
-        hideElement(adminButton, false)
+    if (giganote.user.status === 'admin') {
+        hideElement(adminButton, false);
 
         adminButton.onclick = () => {
-            window.location.href = "admin"
-        }
+            window.location.href = 'admin';
+        };
     }
 
 
-    let tasksHTML = ``
+    let tasksHTML = '';
     for (let i of giganote.tasks) {
         tasksHTML += `
             <div class="taskWrapper" id="${i._id}">
-                <div class="task flex-justifyspacebetween bobatron ${i.completed ? "completed" : "incomplete"} flex-aligncenter" id="task-${i._id}" Bt-CM="0.5">
+                <div class="task flex-justifyspacebetween bobatron ${i.completed ? 'completed' : 'incomplete'} flex-aligncenter" id="task-${i._id}" Bt-CM="0.5">
                     <div>
                         <b>${i.title}</b>
                         <p>${i.content}</p>  
                     </div>
-                    <button class="iconButton ${i.completed ? "greenMark" : "grayMark"} completionTaskButton" taskId="${i._id}" completed="${i.completed ? "true" : "false"}"></button>  
+                    <button class="iconButton ${i.completed ? 'greenMark' : 'grayMark'} completionTaskButton" taskId="${i._id}" completed="${i.completed ? 'true' : 'false'}"></button>  
                 </div>         
                 <button class="iconButton binButton deleteTaskButton" taskId="${i._id}"></button> 
             </div>
-        `
+        `;
     }
 
     giganote.pages.mainPage.innerHTML = `
@@ -237,26 +237,26 @@ const buildMainPage = () => {
             </div>
             
         </div>
-    `
+    `;
 
-    document.getElementById("logout").onclick = () => {
-        giganote.storage.reset()
-        menuEntrySwitch(giganote.pages.mainPage, giganote.pages.loading)
+    document.getElementById('logout').onclick = () => {
+        giganote.storage.reset();
+        menuEntrySwitch(giganote.pages.mainPage, giganote.pages.loading);
 
-        hideElement(logoutButton)
-        hideElement(newTaskButton)
-        hideElement(adminButton)
+        hideElement(logoutButton);
+        hideElement(newTaskButton);
+        hideElement(adminButton);
 
         setTimeout(() => {
             initialize();
         }, 600);
-    }
+    };
 
-    const newTaskWindow = new smoothModal("newTaskButton", newTaskButton)
+    const newTaskWindow = new smoothModal('newTaskButton', newTaskButton);
 
-    newTaskWindow.modalWindowCSS = `background-color: #ffffff; border-radius: 25px; width: 350px; height: 421px; padding: 15px;`;
-    newTaskWindow.collapsedElementCloneCSS = `background-color: #e4e4e4; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 15px; top: 0; left: 0; transition-duration: 0.4s`;
-    newTaskWindow.collapsedElementCloneCSSSegueAddition = `border-radius: 20px`;
+    newTaskWindow.modalWindowCSS = 'background-color: #ffffff; border-radius: 25px; width: 350px; height: 421px; padding: 15px;';
+    newTaskWindow.collapsedElementCloneCSS = 'background-color: #e4e4e4; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 15px; top: 0; left: 0; transition-duration: 0.4s';
+    newTaskWindow.collapsedElementCloneCSSSegueAddition = 'border-radius: 20px';
     newTaskWindow.expandingTime = 0.4;
     newTaskWindow.collapsingTime = 0.4;
     newTaskWindow.collapsedElementCloneHidingTimeout = -0.1;
@@ -283,156 +283,156 @@ const buildMainPage = () => {
         newTaskWindow.expand();
 
         setTimeout(() => {
-            const submitTaskButton = document.getElementById("submitTask"),
-                closeNewTaskWindow = document.getElementById("closeNewTaskWindow");
+            const submitTaskButton = document.getElementById('submitTask'),
+                closeNewTaskWindow = document.getElementById('closeNewTaskWindow');
 
             closeNewTaskWindow.onclick = () => {
-                newTaskWindow.collapse()
-            }
+                newTaskWindow.collapse();
+            };
 
             submitTaskButton.onclick = async () => {
-                const taskTitle = document.getElementById("taskTitle"),
-                    taskContent = document.getElementById("taskContent");
+                const taskTitle = document.getElementById('taskTitle'),
+                    taskContent = document.getElementById('taskContent');
 
                 let pass = true;
 
                 if (!taskTitle.value) {
-                    shakeElement(taskTitle)
+                    shakeElement(taskTitle);
                     pass *= false;
                 }
 
                 if (!taskContent.value) {
-                    shakeElement(taskContent)
+                    shakeElement(taskContent);
                     pass *= false;
                 }
 
                 if (pass) {
-                    uiLocker()
-                    navBarLoader()
+                    uiLocker();
+                    navBarLoader();
 
-                    document.getElementById("newTaskDummyTitle").innerHTML = taskTitle.value;
-                    document.getElementById("newTaskDummyContent").innerHTML = taskContent.value;
+                    document.getElementById('newTaskDummyTitle').innerHTML = taskTitle.value;
+                    document.getElementById('newTaskDummyContent').innerHTML = taskContent.value;
 
-                    const dummy = document.getElementById("newTaskDummy")
-                    dummy.style.paddingTop = "0px";
-                    dummy.style.opacity = "1";
+                    const dummy = document.getElementById('newTaskDummy');
+                    dummy.style.paddingTop = '0px';
+                    dummy.style.opacity = '1';
 
-                    newTaskWindow.collapse()
+                    newTaskWindow.collapse();
 
                     await giganote.addTask({
                         title: taskTitle.value,
                         content: taskContent.value
-                    })
-                    await giganote.getTasks()
+                    });
+                    await giganote.getTasks();
 
-                    navBarLoader(false)
+                    navBarLoader(false);
 
                     setTimeout(() => {
-                        buildMainPage()
-                        uiLocker(false)
-                    }, 1000)
+                        buildMainPage();
+                        uiLocker(false);
+                    }, 1000);
                 }
-            }
+            };
 
             //bobatron.scanner()
-        }, 600)
-    }
+        }, 600);
+    };
 
-    bobatron.scanner()
+    bobatron.scanner();
 
-    const deleteTaskButtons = document.getElementsByClassName("deleteTaskButton");
+    const deleteTaskButtons = document.getElementsByClassName('deleteTaskButton');
     for (let i of deleteTaskButtons) {
         i.onclick = async () => {
-            uiLocker()
-            navBarLoader()
+            uiLocker();
+            navBarLoader();
 
-            const entry = document.getElementById(i.getAttribute("taskId"));
-            entry.setAttribute("style", "z-index: -4; transition-duration: 0.3s; opacity: 0; scale: 0.7; filter: blur(10px);");
-
-            setTimeout(() => {
-                entry.style.marginTop = `-${entry.offsetHeight + 10}px`
-            }, 300)
-
-            await giganote.deleteTask(i.getAttribute("taskId"))
-            await giganote.getTasks()
-
-            navBarLoader(false)
+            const entry = document.getElementById(i.getAttribute('taskId'));
+            entry.setAttribute('style', 'z-index: -4; transition-duration: 0.3s; opacity: 0; scale: 0.7; filter: blur(10px);');
 
             setTimeout(() => {
-                buildMainPage()
-                uiLocker(false)
-            }, 600)
-        }
+                entry.style.marginTop = `-${entry.offsetHeight + 10}px`;
+            }, 300);
+
+            await giganote.deleteTask(i.getAttribute('taskId'));
+            await giganote.getTasks();
+
+            navBarLoader(false);
+
+            setTimeout(() => {
+                buildMainPage();
+                uiLocker(false);
+            }, 600);
+        };
     }
 
-    const completionTaskButtons = document.getElementsByClassName("completionTaskButton");
+    const completionTaskButtons = document.getElementsByClassName('completionTaskButton');
     for (let i of completionTaskButtons) {
         i.onclick = async () => {
-            uiLocker()
-            navBarLoader()
+            uiLocker();
+            navBarLoader();
 
-            const entry = document.getElementById(`task-${i.getAttribute("taskId")}`);
-            entry.transitionDuration = "0.2s"
-            entry.classList.remove("completed", "incomplete")
-            entry.classList.add(i.getAttribute("completed") === "false" ? "completed" : "incomplete")
+            const entry = document.getElementById(`task-${i.getAttribute('taskId')}`);
+            entry.transitionDuration = '0.2s';
+            entry.classList.remove('completed', 'incomplete');
+            entry.classList.add(i.getAttribute('completed') === 'false' ? 'completed' : 'incomplete');
 
-            i.transitionDuration = "0.2s"
-            i.style.opacity = "0"
+            i.transitionDuration = '0.2s';
+            i.style.opacity = '0';
             setTimeout(() => {
-                i.classList.remove("greenMark", "grayMark")
-                i.classList.add(i.getAttribute("completed") === "false" ? "greenMark" : "grayMark")
-                i.style.opacity = "1"
-            }, 200)
+                i.classList.remove('greenMark', 'grayMark');
+                i.classList.add(i.getAttribute('completed') === 'false' ? 'greenMark' : 'grayMark');
+                i.style.opacity = '1';
+            }, 200);
 
-            await giganote.patchTask(i.getAttribute("taskId"), { completed: i.getAttribute("completed") === "false" })
-            await giganote.getTasks()
+            await giganote.patchTask(i.getAttribute('taskId'), { completed: i.getAttribute('completed') === 'false' });
+            await giganote.getTasks();
 
-            navBarLoader(false)
+            navBarLoader(false);
 
             setTimeout(() => {
-                buildMainPage()
-                uiLocker(false)
-            }, 600)
-        }
+                buildMainPage();
+                uiLocker(false);
+            }, 600);
+        };
     }
-}
+};
 
 const initialize = async () => {
     if (!giganote.storage.data.token) {
-        menuEntrySwitch(giganote.pages.loading, giganote.pages.authPage)
-        buildAuthPage()
+        menuEntrySwitch(giganote.pages.loading, giganote.pages.authPage);
+        buildAuthPage();
     } else {
-        const authStatus = await giganote.getUser()
+        const authStatus = await giganote.getUser();
 
-        console.log(authStatus)
+        console.log(authStatus);
 
         if (authStatus) {
-            if (giganote.user.status !== "ban") {
-                console.log("super")
-                await giganote.getTasks()
-                buildMainPage()
-                menuEntrySwitch(giganote.pages.loading, giganote.pages.mainPage)
+            if (giganote.user.status !== 'ban') {
+                console.log('super');
+                await giganote.getTasks();
+                buildMainPage();
+                menuEntrySwitch(giganote.pages.loading, giganote.pages.mainPage);
             } else {
-                buildAuthPage(`<b>You're banned!</b><br>Reason: ${giganote.user.banReason}`)
-                menuEntrySwitch(giganote.pages.loading, giganote.pages.authPage)
+                buildAuthPage(`<b>You're banned!</b><br>Reason: ${giganote.user.banReason}`);
+                menuEntrySwitch(giganote.pages.loading, giganote.pages.authPage);
             }
         } else {
-            console.log("Auth error")
-            buildAuthPage()
-            menuEntrySwitch(giganote.pages.loading, giganote.pages.authPage)
+            console.log('Auth error');
+            buildAuthPage();
+            menuEntrySwitch(giganote.pages.loading, giganote.pages.authPage);
         }
     }
-}
+};
 
 
 
-document.addEventListener("DOMContentLoaded", async () => {
-    bobatron.scanner()
+document.addEventListener('DOMContentLoaded', async () => {
+    bobatron.scanner();
 
-    giganote = new Giganote()
-    initialize()
-})
+    giganote = new Giganote();
+    initialize();
+});
 
-window.addEventListener("resize", () => {
-    bobatron.scanner()
-})
+window.addEventListener('resize', () => {
+    bobatron.scanner();
+});
