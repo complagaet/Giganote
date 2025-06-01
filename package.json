@@ -6,7 +6,8 @@
     "lint": "eslint .",
     "dev": "nodemon server.js",
     "test": "echo Вот тут тесты запускаются...",
-    "start": "node server.js"
+    "start": "node server.js",
+    "check-todos": "node scripts/check-todos.js"
   },
   "author": "complagaet",
   "license": "ISC",
