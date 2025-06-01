@@ -45,7 +45,7 @@ function walk(dir, issues = []) {
 }
 
 // MAIN
-const results = walk(process.cwd());
+const results = walk(process.cwd()).filter(issue => !issue.file.includes('scripts/check-todos.js'));
 
 if (results.length > 0) {
     console.error('❌ Найдены TODO / FIXME комментарии:');
