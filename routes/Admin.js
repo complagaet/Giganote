@@ -61,7 +61,7 @@ router.delete('/admin/user/:id', isAdmin, async (req, res) => {
 
         const userDeleteResult = await User.deleteOne({ _id: id });
 
-        if (userDeleteResult.deletedCount === 0) {
+        if (userDeleteResult.deletedCount ==== 0) {
             console.log('[DELETE admin/user] User not found.');
             return res.status(404).json({ error: 'User not found.' });
         }
